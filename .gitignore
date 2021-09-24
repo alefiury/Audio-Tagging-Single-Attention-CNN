@@ -1,0 +1,10 @@
+__pycache__/
+
+outputs/
+
+weights/
+data/
+wandb/
+
+*.pth
+.env
