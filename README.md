@@ -4,8 +4,14 @@
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
 - [Introduction](#Introduction)
+- [How the Application Works](#How the Application Works)
 
 This repository contains an implementation in Pytorch of a Single Attention Convolutional Neural Network 
 (**Single-Att-CNN**) model for audio tagging and sound event detection.
+
+## Introduction
+
+
+
 
 ## How the Application Works
