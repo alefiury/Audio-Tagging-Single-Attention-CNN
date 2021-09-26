@@ -1,12 +1,8 @@
-import os
-import glob
-import timm
 import torch
 import numpy as np
 from tqdm import tqdm
 from sklearn import metrics
 from omegaconf import DictConfig
-from hydra.utils import get_original_cwd
 
 from model import Cnn_Single_Att, Wavegram_Logmel_Cnn_Single_Att
 

@@ -12,6 +12,17 @@ def prepare_train(cfg : DictConfig,
                     metadata_path: str,
                     data_path: str,
                     output_path: str) -> None:
+    """
+    Loads metadata and prepares data to train the models.
+
+    ----
+    Args:
+        cfg: A DictConfig given by hydra.
+        fold: Fold identifier.
+        metadata_path: Path to the metadata of the audio files.
+        data_path: Path to the directory where the audio files are stored.
+        output_path: Path to the directory where the model weights will be saved.
+    """
 
     # Load csv metadata file
     df = pd.read_csv(metadata_path)
@@ -67,6 +78,18 @@ def prepare_eval(cfg : DictConfig,
                     metadata_path: str,
                     data_path: str,
                     checkpoint_path: str) -> None:
+    """
+    Loads metadata and prepares data to evaluate the models.
+
+    ----
+    Args:
+        cfg: A DictConfig given by hydra.
+        fold: Fold identifier.
+        metadata_path: Path to the metadata of the audio files.
+        data_path: Path to the directory where the audio files are stored.
+        checkpoint_path: Path to the base directory where the models weights were saved.
+    """
+
     # Load csv metadata file
     df = pd.read_csv(metadata_path)
 

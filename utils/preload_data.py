@@ -1,13 +1,10 @@
-import os
 import logging
 
 import librosa
 import datasets
 import pandas as pd
 import numpy as np
-from tqdm import tqdm
 from datasets import Dataset
-from sklearn.model_selection import train_test_split
 
 # Logger
 log = logging.getLogger(__name__)
@@ -17,7 +14,7 @@ def audio_file_to_array(batch: datasets.arrow_dataset.Dataset,
                             class_num: int,
                             sample_rate: int) -> datasets.arrow_dataset.Dataset:
     """
-    Loads the audios from memory
+    Loads the audios from memory.
 
     The audios are loaded from disk and saved in a format that will speed up training afterwards.
 

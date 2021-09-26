@@ -35,7 +35,7 @@ def main(cfg : DictConfig) -> None:
                     **cfg.model,
                     **cfg.data}
 
-        for fold in cfg.train.folds[4:]:
+        for fold in cfg.train.folds:
             log.info(f"Training fold: {fold} -> {len(cfg.train.folds)}... ")
             # Start a new run on wandb
             run = wandb.init(project=os.path.basename(cfg.data.output_dir),
