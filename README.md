@@ -37,7 +37,12 @@ The application uses Hydra to control all the training configurations. For more
 information on Hydra and it's documentation visit the Hydra [website](https://hydra.cc/).
 
 The relevant information related with the training configuration can be found in the `default.yaml` 
-file in the `config` folder.
+file, inside the `config` folder.
+
+You can also pass or modify options through the command line, for instance: `python main.py train.epochs=100`.
+
+To train or validate your model you need to set the `command` option. To train you can run: `python main.py command=train`
+and to validate you can run: `python main.py command=test`.
 
 ## Contact
 
