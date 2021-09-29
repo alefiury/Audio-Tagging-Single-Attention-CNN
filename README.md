@@ -64,6 +64,6 @@ To train or evaluate your model you need to set the `command` option.
 - To train: `python main.py command=train`
 - To evaluate: `python main.py command=test`.
 
-## Contact
+# Contact
 
 - e-mail: alef_iury_c.c@discente.ufg.br
