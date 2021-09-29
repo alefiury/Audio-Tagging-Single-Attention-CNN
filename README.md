@@ -32,7 +32,7 @@ $ cd Audio-Tagging-Single-Attention-CNN
 $ pip install -r requirements.txt
 ```
 
-## Download of the Dataset
+## Dataset
 
 First, is necessary to download the dataset that you will be using. The ESC-50 dataset can be
 downloaded with the following bash command:
