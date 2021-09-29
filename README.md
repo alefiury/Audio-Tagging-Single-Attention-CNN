@@ -34,7 +34,7 @@ $ pip install -r requirements.txt
 
 ## Download of the Dataset
 
-First, you need to download the dataset that will be used. The ESC-50 dataset can be
+First, is necessary to download the dataset that you will be using. The ESC-50 dataset can be
 downloaded with the following bash command:
 
 ```
