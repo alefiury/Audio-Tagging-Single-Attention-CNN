@@ -85,7 +85,7 @@ def main(cfg : DictConfig) -> None:
         log.info(f"F1-Score mean: {np.mean(f1_scores)} | F1-Score std: {np.std(f1_scores)}")
 
     else:
-        print("")
+        print("Wrong Command... Exiting... ")
 
 
 if __name__ == '__main__':
