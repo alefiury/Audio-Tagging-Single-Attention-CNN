@@ -41,7 +41,6 @@ def train_model(train_dataloader: torch.utils.data.DataLoader,
 
     model.to(device)
 
-    # Using same loss function as PANNs
     criterion = BCELossModified()
     optimizer = torch.optim.Adam(model.parameters(),
                                 lr=cfg.train.lr,
