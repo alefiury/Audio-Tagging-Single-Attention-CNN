@@ -57,8 +57,12 @@ To save training statistics (loss, accuracy, gradients and etc) the Weights & Bi
 Is necessary that you create an account before running the application. 
 Related information can be found at their [website](https://wandb.ai/site).
 
-To train or validate your model you need to set the `command` option. To train you can run: `python main.py command=train`
-and to validate you can run: `python main.py command=test`.
+## Training and Evaluation
+
+To train or evaluate your model you need to set the `command` option. 
+
+- To train: `python main.py command=train`
+- To evaluate: `python main.py command=test`.
 
 ## Contact
 
