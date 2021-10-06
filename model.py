@@ -5,7 +5,7 @@ Sources:
         https://www.kaggle.com/c/rfcx-species-audio-detection/discussion/211007
         https://www.kaggle.com/c/birdsong-recognition/discussion/183204
         https://www.kaggle.com/c/birdsong-recognition/discussion/183208
-        https://arxiv.org/abs/1912.10211
+        https://arxiv.org/pdf/1912.10211.pdf
         https://arxiv.org/pdf/2102.01243.pdf
         https://arxiv.org/pdf/2104.11587.pdf
 """
