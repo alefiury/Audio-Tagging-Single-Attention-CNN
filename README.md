@@ -58,7 +58,7 @@ You can also pass or modify options through the command line, for instance: `pyt
 
 To save training statistics (loss, accuracy, gradients and etc) the Weights & Biases plataform is used. 
 Is necessary that you create an account before running the application. 
-Related information can be found at their [website](https://wandb.ai/site).
+Related information can be found on their [website](https://wandb.ai/site).
 
 ## Training and Evaluation
 
