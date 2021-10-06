@@ -30,9 +30,9 @@ Clone this repository and install all the dependencies.
 The usage of a virtualenv or Conda environment is recommended.
 
 ```
-$ git clone https://github.com/alefiury/Audio-Tagging-Single-Attention-CNN
-$ cd Audio-Tagging-Single-Attention-CNN
-$ pip install -r requirements.txt
+git clone https://github.com/alefiury/Audio-Tagging-Single-Attention-CNN
+cd Audio-Tagging-Single-Attention-CNN
+pip install -r requirements.txt
 ```
 
 ## Dataset
@@ -41,7 +41,7 @@ First, is necessary to download the dataset that you will be using. The ESC-50 d
 downloaded with the following bash command:
 
 ```
-$ sudo bash download_dataset.sh
+sudo bash download_dataset.sh
 ```
 
 ## Configuration
