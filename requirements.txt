@@ -1,0 +1,16 @@
+datasets==1.12.1
+hydra-colorlog==1.1.0
+hydra-core==1.1.1
+librosa==0.8.1
+numpy==1.19.5
+omegaconf==2.1.1
+pandas==1.1.5
+scikit-learn==0.24.2
+timm==0.4.12
+torch==1.9.1
+torchaudio==0.9.0a0+a85b239
+torchlibrosa==0.0.9
+torchvision==0.10.1
+tqdm==4.62.3
+transformers==4.11.2
+wandb==0.12.4
