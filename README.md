@@ -65,7 +65,11 @@ Related information can be found on their [website](https://wandb.ai/site).
 To train or evaluate your model you need to set the `command` option. 
 
 - To train: `python main.py command=train`
-- To evaluate: `python main.py command=test`.
+- To evaluate: `python main.py command=test`
+
+# Author 
+
+- Alef Iury Siqueira Ferreira
 
 # Contact
 
