@@ -15,7 +15,7 @@ This repository contains an implementation in Pytorch of a Single Attention Conv
 
 # Introduction
 
-This application is trained and evaluated on the ESC-50 dataset, but can be easily modified to be
+The model is trained and evaluated on the ESC-50 dataset, but can be easily modified to be
 applied on others datasets or used as a base layout for your projects.
 
 The model is comprised of a CNN component that is used as an encoder and a single-attention mechanism
