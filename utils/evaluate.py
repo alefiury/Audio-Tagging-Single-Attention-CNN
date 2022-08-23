@@ -8,9 +8,11 @@ from model import Cnn_Single_Att, Wavegram_Logmel_Cnn_Single_Att
 
 device = ('cuda' if torch.cuda.is_available() else 'cpu')
 
-def test_model(valid_loader: torch.utils.data.DataLoader,
-                    checkpoint_path: str,
-                    cfg : DictConfig) -> None:
+def test_model(
+    valid_loader: torch.utils.data.DataLoader,
+    checkpoint_path: str,
+    cfg : DictConfig
+) -> None:
     """
     Predicts new data.
 
@@ -52,7 +54,5 @@ def test_model(valid_loader: torch.utils.data.DataLoader,
 
     preds = np.array(preds).flatten()
     labels = np.array(labels).flatten()
-
-    # print(metrics.classification_report(np.array(labels), np.array(preds)))
 
     return preds, labels

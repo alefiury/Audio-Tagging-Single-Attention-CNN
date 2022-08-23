@@ -1,17 +1,20 @@
 import os
 import glob
 import logging
+import argparse
 
-import numpy as np
-import torch
-import hydra
 import wandb
-import pandas as pd
-from omegaconf import DictConfig
-from hydra.utils import get_original_cwd
-from sklearn.metrics import (accuracy_score, f1_score,
-                                precision_score, recall_score)
+import torch
+import numpy as np
+from omegaconf import OmegaConf
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    precision_score,
+    recall_score
+)
 
+from utils.utils import formatter_single
 from utils.prepare_train_eval import prepare_train, prepare_eval
 
 device = ('cuda' if torch.cuda.is_available() else 'cpu')
@@ -20,44 +23,67 @@ wandb.login()
 
 # Logger
 log = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format=formatter_single.FORMATTER)
 
-@hydra.main(config_path="config", config_name="default")
-def main(cfg : DictConfig) -> None:
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-c",
+        "--config_path",
+        default=os.path.join("config", "default.yaml"),
+        type=str,
+        help="YAML file with configurations"
+    )
+    parser.add_argument(
+        '--train',
+        default=False,
+        action='store_true',
+        help='If True, train model'
+    )
+    parser.add_argument(
+        '--test',
+        default=False,
+        action='store_true',
+        help='If True, test model'
+    )
+    args = parser.parse_args()
 
-    # Get current directory path to deal with Hydra logging path
-    original_cwd = get_original_cwd()
-    # Creates a directory to save wandb logs outside of Hydra logging path
-    os.makedirs(os.path.join(original_cwd, 'wandb'), exist_ok=True)
+    cfg = OmegaConf.load(args.config_path)
 
-
-    if cfg.command == 'train':
-        wandb_config = {**cfg.train,
-                    **cfg.model,
-                    **cfg.data}
+    if args.train:
+        wandb_config = {
+            **cfg.train,
+            **cfg.model,
+            **cfg.data,
+        }
 
         for fold in cfg.train.folds:
             log.info(f"Training fold: {fold} -> {len(cfg.train.folds)}... ")
             # Start a new run on wandb
-            run = wandb.init(project=os.path.basename(cfg.data.output_dir),
-                                config=wandb_config,
-                                dir=os.path.join(original_cwd, 'wandb'),
-                                reinit=True)
+            run = wandb.init(
+                project=os.path.basename(cfg.data.output_dir),
+                config=wandb_config,
+                reinit=True,
+                mode=None if cfg.wandb_logging else "disabled"
+            )
 
             # Change run name to facilitate statistics traceability
             wandb.run.name = 'fold '+str(fold)
             wandb.run.save()
 
-            prepare_train(cfg=cfg,
-                            fold=fold,
-                            metadata_path=os.path.join(original_cwd, cfg.data.metadata_path),
-                            data_path=os.path.join(original_cwd, cfg.data.data_path),
-                            output_path=os.path.join(original_cwd, cfg.data.output_dir, 'fold_'+str(fold)))
+            prepare_train(
+                cfg=cfg,
+                fold=fold,
+                metadata_path=cfg.data.metadata_path,
+                data_path=cfg.data.data_path,
+                output_path=os.path.join(cfg.data.output_dir, 'fold_'+str(fold))
+            )
 
             # Finish run
             run.finish()
 
 
-    elif cfg.command == 'test':
+    elif args.test:
         accs = []
         f1_scores = []
         precisions = []
@@ -66,13 +92,15 @@ def main(cfg : DictConfig) -> None:
             log.info(f"Testing fold: {fold} -> {len(cfg.train.folds)}... ")
 
             # Get saved weights paths
-            checkpoint_path = glob.glob(os.path.join(original_cwd, cfg.data.output_dir, 'fold_'+str(fold), '*.pth'))[0]
+            checkpoint_path = glob.glob(os.path.join(cfg.data.output_dir, 'fold_'+str(fold), '*.pth'))[0]
 
-            preds, labels = prepare_eval(cfg=cfg,
-                            fold=fold,
-                            metadata_path=os.path.join(original_cwd, cfg.data.metadata_path),
-                            data_path=os.path.join(original_cwd, cfg.data.data_path),
-                            checkpoint_path=checkpoint_path)
+            preds, labels = prepare_eval(
+                cfg=cfg,
+                fold=fold,
+                metadata_path=cfg.data.metadata_path,
+                data_path=cfg.data.data_path,
+                checkpoint_path=checkpoint_path
+            )
 
             accs.append(accuracy_score(labels, preds))
             f1_scores.append(f1_score(labels, preds, average='macro'))

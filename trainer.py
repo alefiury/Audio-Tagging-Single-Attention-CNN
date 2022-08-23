@@ -17,10 +17,12 @@ device = ('cuda' if torch.cuda.is_available() else 'cpu')
 # Logger
 log = logging.getLogger(__name__)
 
-def train_model(train_dataloader: torch.utils.data.DataLoader,
-                    val_dataloader: torch.utils.data.DataLoader,
-                    output_dir: str,
-                    cfg : DictConfig) -> None:
+def train_model(
+    train_dataloader: torch.utils.data.DataLoader,
+    val_dataloader: torch.utils.data.DataLoader,
+    output_dir: str,
+    cfg : DictConfig
+) -> None:
 
     # Create directory to save weights
     os.makedirs(output_dir, exist_ok=True)

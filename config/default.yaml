@@ -4,8 +4,8 @@ train:
     seed: 42
     epochs: 120
     lr: 1e-3
-    batch_size: 16
-    num_workers: 8
+    batch_size: 28
+    num_workers: 10
     folds: [1, 2, 3, 4, 5]
     patience: ${train.epochs} # No early stopping (patience == epochs)
     use_wavgram_logmel: false
@@ -21,7 +21,7 @@ model:
     fmax: 16000
     encoder_features_num: 1280
     embedding_dim: 2048
-    imagenet_pretrained: true
+    imagenet_pretrained: false
     class_num: 50
 
 data:
@@ -29,14 +29,9 @@ data:
     step_scheduler: true
     use_mixup: false
     use_specaug: false
-    output_dir: weights/${model.encoder}-${model.imagenet_pretrained}_imagenet-${data.use_mixup}_mixup-${data.use_specaug}_specaug-${train.use_wavgram_logmel}_wavgram_logmel
+    output_dir: weights/avaliacao_tf_${model.encoder}-${model.imagenet_pretrained}_imagenet-${data.use_mixup}_mixup-${data.use_specaug}_specaug
     data_path: data/ESC-50-master/audio
     metadata_path: data/ESC-50-master/meta/esc50.csv
     preloaded_data_path: preloaded_data/ESC-50
 
-command: ??? # Possible options: train, test
-
-defaults:
-  - override hydra/job_logging: colorlog
-  - override hydra/hydra_logging: colorlog
-
+wandb_logging: false

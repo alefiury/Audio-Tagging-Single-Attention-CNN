@@ -26,7 +26,7 @@ that is based on how humans perceive and classify different kinds of sounds.
 
 ## Installation
 
-Clone this repository and install all the dependencies. 
+Clone this repository and install all the dependencies.
 The usage of a virtualenv or Conda environment is recommended.
 
 ```
@@ -49,25 +49,25 @@ sudo bash download_dataset.sh
 The application uses Hydra to control all the training configurations. For more
 information on Hydra and it's documentation visit the Hydra [website](https://hydra.cc/).
 
-The relevant information related with the training configuration can be found in the `default.yaml` 
+The relevant information related with the training configuration can be found in the `default.yaml`
 file, inside the `config` folder.
 
 You can also pass or modify options through the command line, for instance: `python main.py train.epochs=100`.
 
 ## Logging
 
-To save training statistics (loss, accuracy, gradients and etc) the Weights & Biases plataform is used. 
-Is necessary that you create an account before running the application. 
+To save training statistics (loss, accuracy, gradients and etc) the Weights & Biases plataform is used.
+Is necessary that you create an account before running the application.
 Related information can be found on their [website](https://wandb.ai/site).
 
 ## Training and Evaluation
 
-To train or evaluate your model you need to set the `command` option. 
+To train or evaluate your model you need to set the `command` option.
 
 - To train: `python main.py command=train`
 - To evaluate: `python main.py command=test`
 
-# Author 
+# Author
 
 - Alef Iury Siqueira Ferreira
 

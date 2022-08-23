@@ -9,15 +9,14 @@ Sources:
         https://arxiv.org/pdf/2102.01243.pdf
         https://arxiv.org/pdf/2104.11587.pdf
 """
-
 from typing import Dict
+
+import timm
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from functools import partial
-import timm
-from torchlibrosa.stft import Spectrogram, LogmelFilterBank
 from torchlibrosa.augmentation import SpecAugmentation
+from torchlibrosa.stft import Spectrogram, LogmelFilterBank
 
 from utils.utils import do_mixup
 
@@ -41,15 +40,19 @@ class ConvBlock(nn.Module):
 
         super(ConvBlock, self).__init__()
 
-        self.conv1 = nn.Conv2d(in_channels=in_channels,
-                              out_channels=out_channels,
-                              kernel_size=(3, 3), stride=(1, 1),
-                              padding=(1, 1), bias=False)
+        self.conv1 = nn.Conv2d(
+            in_channels=in_channels,
+            out_channels=out_channels,
+            kernel_size=(3, 3), stride=(1, 1),
+            padding=(1, 1), bias=False
+        )
 
-        self.conv2 = nn.Conv2d(in_channels=out_channels,
-                              out_channels=out_channels,
-                              kernel_size=(3, 3), stride=(1, 1),
-                              padding=(1, 1), bias=False)
+        self.conv2 = nn.Conv2d(
+            in_channels=out_channels,
+            out_channels=out_channels,
+            kernel_size=(3, 3), stride=(1, 1),
+            padding=(1, 1), bias=False
+        )
 
         self.bn1 = nn.BatchNorm2d(out_channels)
         self.bn2 = nn.BatchNorm2d(out_channels)
@@ -67,15 +70,19 @@ class ConvPreWavBlock(nn.Module):
 
         super(ConvPreWavBlock, self).__init__()
 
-        self.conv1 = nn.Conv1d(in_channels=in_channels,
-                              out_channels=out_channels,
-                              kernel_size=3, stride=1,
-                              padding=1, bias=False)
+        self.conv1 = nn.Conv1d(
+            in_channels=in_channels,
+            out_channels=out_channels,
+            kernel_size=3, stride=1,
+            padding=1, bias=False
+        )
 
-        self.conv2 = nn.Conv1d(in_channels=out_channels,
-                              out_channels=out_channels,
-                              kernel_size=3, stride=1, dilation=2,
-                              padding=2, bias=False)
+        self.conv2 = nn.Conv1d(
+            in_channels=out_channels,
+            out_channels=out_channels,
+            kernel_size=3, stride=1, dilation=2,
+            padding=2, bias=False
+        )
 
         self.bn1 = nn.BatchNorm1d(out_channels)
         self.bn2 = nn.BatchNorm1d(out_channels)
@@ -103,15 +110,19 @@ class ConvBlock(nn.Module):
 
         super(ConvBlock, self).__init__()
 
-        self.conv1 = nn.Conv2d(in_channels=in_channels,
-                              out_channels=out_channels,
-                              kernel_size=(3, 3), stride=(1, 1),
-                              padding=(1, 1), bias=False)
+        self.conv1 = nn.Conv2d(
+            in_channels=in_channels,
+            out_channels=out_channels,
+            kernel_size=(3, 3), stride=(1, 1),
+            padding=(1, 1), bias=False
+        )
 
-        self.conv2 = nn.Conv2d(in_channels=out_channels,
-                              out_channels=out_channels,
-                              kernel_size=(3, 3), stride=(1, 1),
-                              padding=(1, 1), bias=False)
+        self.conv2 = nn.Conv2d(
+            in_channels=out_channels,
+            out_channels=out_channels,
+            kernel_size=(3, 3), stride=(1, 1),
+            padding=(1, 1), bias=False
+        )
 
         self.bn1 = nn.BatchNorm2d(out_channels)
         self.bn2 = nn.BatchNorm2d(out_channels)
@@ -150,22 +161,24 @@ class AttBlock(nn.Module):
         super().__init__()
 
         # Attention Layer
-        self.att = nn.Conv1d(in_channels=in_features,
-                                out_channels=out_features,
-                                kernel_size=1,
-                                stride=1,
-                                padding=0,
-                                bias=True
-                            )
+        self.att = nn.Conv1d(
+            in_channels=in_features,
+            out_channels=out_features,
+            kernel_size=1,
+            stride=1,
+            padding=0,
+            bias=True
+        )
 
         # Classification Layer
-        self.cla = nn.Conv1d(in_channels=in_features,
-                                out_channels=out_features,
-                                kernel_size=1,
-                                stride=1,
-                                padding=0,
-                                bias=True
-                            )
+        self.cla = nn.Conv1d(
+            in_channels=in_features,
+            out_channels=out_features,
+            kernel_size=1,
+            stride=1,
+            padding=0,
+            bias=True
+        )
 
         self.bn_att = nn.BatchNorm1d(out_features)
         self.init_weights()
@@ -206,7 +219,8 @@ class Cnn_Single_Att(nn.Module):
             encoder_features_num: int,
             embedding_dim: int,
             imagenet_pretrained: bool,
-            class_num: int):
+            class_num: int
+    ):
 
         super(Cnn_Single_Att, self).__init__()
 
@@ -234,29 +248,35 @@ class Cnn_Single_Att(nn.Module):
         self.freq_stripes_num = 2
 
         # Spectrogram extractor
-        self.spectrogram_extractor = Spectrogram(n_fft=window_size,
-                                                    hop_length=hop_size,
-                                                    win_length=window_size,
-                                                    window=self.window,
-                                                    center=self.center,
-                                                    pad_mode=self.pad_mode,
-                                                    freeze_parameters=True)
+        self.spectrogram_extractor = Spectrogram(
+            n_fft=window_size,
+            hop_length=hop_size,
+            win_length=window_size,
+            window=self.window,
+            center=self.center,
+            pad_mode=self.pad_mode,
+            freeze_parameters=True
+        )
 
         # Logmel feature extractor
-        self.logmel_extractor = LogmelFilterBank(sr=sample_rate,
-                                                    n_fft=window_size,
-                                                    n_mels=mel_bins,
-                                                    fmin=fmin, fmax=fmax,
-                                                    ref=self.ref,
-                                                    amin=self.amin,
-                                                    top_db=self.top_db,
-                                                    freeze_parameters=True)
+        self.logmel_extractor = LogmelFilterBank(
+            sr=sample_rate,
+            n_fft=window_size,
+            n_mels=mel_bins,
+            fmin=fmin, fmax=fmax,
+            ref=self.ref,
+            amin=self.amin,
+            top_db=self.top_db,
+            freeze_parameters=True
+        )
 
         # SpecAugment
-        self.spec_augmenter = SpecAugmentation(time_drop_width=self.time_drop_width,
-                                                    time_stripes_num=self.time_stripes_num,
-                                                    freq_drop_width=self.freq_drop_width,
-                                                    freq_stripes_num=self.freq_stripes_num)
+        self.spec_augmenter = SpecAugmentation(
+            time_drop_width=self.time_drop_width,
+            time_stripes_num=self.time_stripes_num,
+            freq_drop_width=self.freq_drop_width,
+            freq_stripes_num=self.freq_stripes_num
+        )
 
         # Model Encoder (Image model backbone)
         self.encoder = timm.create_model(self.encoder, pretrained=self.imagenet_pretrained)
@@ -335,7 +355,8 @@ class Wavegram_Logmel_Cnn_Single_Att(nn.Module):
             encoder_features_num: int,
             embedding_dim: int,
             imagenet_pretrained: bool,
-            class_num: int):
+            class_num: int
+        ):
 
         super(Wavegram_Logmel_Cnn_Single_Att, self).__init__()
 

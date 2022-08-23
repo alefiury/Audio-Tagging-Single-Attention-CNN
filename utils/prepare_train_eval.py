@@ -7,11 +7,13 @@ from trainer import train_model
 from utils.evaluate import test_model
 from utils.preload_data import prepare_data
 
-def prepare_train(cfg : DictConfig,
-                    fold: int,
-                    metadata_path: str,
-                    data_path: str,
-                    output_path: str) -> None:
+def prepare_train(
+    cfg : DictConfig,
+    fold: int,
+    metadata_path: str,
+    data_path: str,
+    output_path: str
+) -> None:
     """
     Loads metadata and prepares data to train the models.
 
@@ -32,22 +34,32 @@ def prepare_train(cfg : DictConfig,
     df_val = df[df['fold']==fold]
 
     # Load train data from disk
-    dataset_train = prepare_data(df=df_train,
-                                    data_path=data_path,
-                                    class_num=cfg.model.class_num,
-                                    sample_rate=cfg.model.sample_rate,
-                                    num_workers=cfg.train.num_workers)
+    dataset_train = prepare_data(
+        df=df_train,
+        data_path=data_path,
+        class_num=cfg.model.class_num,
+        sample_rate=cfg.model.sample_rate,
+        num_workers=cfg.train.num_workers
+    )
 
     # Load validation data from disk
-    dataset_val = prepare_data(df=df_val,
-                                    data_path=data_path,
-                                    class_num=cfg.model.class_num,
-                                    sample_rate=cfg.model.sample_rate,
-                                    num_workers=cfg.train.num_workers)
+    dataset_val = prepare_data(
+        df=df_val,
+        data_path=data_path,
+        class_num=cfg.model.class_num,
+        sample_rate=cfg.model.sample_rate,
+        num_workers=cfg.train.num_workers
+    )
 
     # Convert preloaded data to torch tensor to use as input in the pytorch Dataloader
-    dataset_train.set_format(type='torch', columns=['image', 'target', 'hot_target'])
-    dataset_val.set_format(type='torch', columns=['image', 'target', 'hot_target'])
+    dataset_train.set_format(
+        type='torch',
+        columns=['image', 'target', 'hot_target']
+    )
+    dataset_val.set_format(
+        type='torch',
+        columns=['image', 'target', 'hot_target']
+    )
 
     # Drop last batch to make sure that the batch size has an even number of samples,
     # for all batches, so that the implementation of the mixup augmentation works correctly
@@ -67,10 +79,12 @@ def prepare_train(cfg : DictConfig,
         num_workers=cfg.train.num_workers
     )
 
-    train_model(train_loader,
-                    valid_loader,
-                    output_path,
-                    cfg=cfg)
+    train_model(
+        train_loader,
+        valid_loader,
+        output_path,
+        cfg=cfg
+    )
 
 
 def prepare_eval(cfg : DictConfig,
